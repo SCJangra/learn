@@ -17,6 +17,10 @@ jobs:
           override: true
       - name: Build
         run: cargo build --release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./target/release/learn*
   build-windows:
     name: Windows build
     runs-on: windows-latest
@@ -30,6 +34,10 @@ jobs:
           override: true
       - name: Build
         run: cargo build --release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./target/release/learn*
   build-macos:
     name: Mac os build
     runs-on: macos-latest
@@ -43,4 +51,7 @@ jobs:
           override: true
       - name: Build
         run: cargo build --release
-
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./target/release/learn*
