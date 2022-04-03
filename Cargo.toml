@@ -7,7 +7,6 @@ edition = "2021"
 
 [dependencies]
 tokio = { version = "1.17", features = ["full"] }
-files = { path = "../files" }
 futures = "0.3"
 futures-async-stream = "0.2"
 tree_magic_mini = "3.0"
