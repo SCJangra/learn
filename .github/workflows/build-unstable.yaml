@@ -20,7 +20,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tab_name: unstable
+          tag_name: unstable
           files: ./target/release/learn*
   build-windows:
     name: Windows build
@@ -38,7 +38,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tab_name: unstable
+          tag_name: unstable
           files: ./target/release/learn*
   build-macos:
     name: Mac os build
@@ -56,5 +56,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tab_name: unstable
+          tag_name: unstable
           files: ./target/release/learn*
