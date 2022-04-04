@@ -1,3 +1,5 @@
+name: This is unstable build
+
 on:
   push:
     branches:
@@ -20,41 +22,6 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
+          prerelease: true
           tag_name: unstable
-          files: ./target/release/learn*
-  build-windows:
-    name: Windows build
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
-      - name: Build
-        run: cargo build --release
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: unstable
-          files: ./target/release/learn*
-  build-macos:
-    name: Mac os build
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
-      - name: Build
-        run: cargo build --release
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: unstable
-          files: ./target/release/learn*
+          files: ./target/release/learn
