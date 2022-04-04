@@ -1,32 +1,76 @@
-name: This is unstable build
-
 on:
   push:
     branches:
       - main
 
+env:
+  TAG_NAME: unstable
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
-  build-linux:
-    name: Linux build
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Delete previous release
+        run: |
+          git fetch --tags
+          gh release delete $TAG_NAME -y
+          git push --delete origin $TAG_NAME
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: true
+          name: This is a release
+          tag_name: $TAG_NAME
+
+  linux-build:
+    name: Build for linux
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
           override: true
+
       - name: Build
         run: cargo build --release
-      - name: Create unstable release
-        uses: viperproject/create-nightly-release@v1
-        env:
-          # This token is provided by Actions, you do not need to create your own token
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload binary
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: uuu
-          release_name: Unstable release uuu
-          body: Body for the release
-          keep_num: 0
-          keep_tags: false
+          tag_name: $TAG_NAME
+          files: target/release/learn
+
+  windows-build:
+    name: Build for windows
+    runs-on: windows-latest
+    needs: release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Upload binary
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: $TAG_NAME
+          files: target/release/learn.exe
+
