@@ -15,7 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: tag-exists-action
+        id: check-tag
+        uses: mukunku/tag-exists-action@v1.0.0
+        with:
+          tag: $TAG_NAME
+
       - name: Delete previous release
+        if: steps.check-tag.outputs.exists == 'true'
         run: |
           git fetch --tags
           gh release delete $TAG_NAME -y
