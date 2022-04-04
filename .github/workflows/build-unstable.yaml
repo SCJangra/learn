@@ -21,6 +21,8 @@ jobs:
         run: cargo build --release
       - name: Delete previous release
         run: gh release delete unstable -y
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
