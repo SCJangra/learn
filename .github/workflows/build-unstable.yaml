@@ -19,21 +19,21 @@ jobs:
         id: check-tag
         uses: mukunku/tag-exists-action@v1.0.0
         with:
-          tag: $TAG_NAME
+          tag: ${{ env.TAG_NAME }}
 
       - name: Delete previous release
         if: steps.check-tag.outputs.exists == 'true'
         run: |
           git fetch --tags
-          gh release delete $TAG_NAME -y
-          git push --delete origin $TAG_NAME
+          gh release delete ${{ env.TAG_NAME }} -y
+          git push --delete origin ${{ env.TAG_NAME }}
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
           prerelease: true
           name: This is a release
-          tag_name: $TAG_NAME
+          tag_name: ${{ env.TAG_NAME }}
 
   linux-build:
     name: Build for linux
@@ -55,7 +55,7 @@ jobs:
       - name: Upload binary
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: $TAG_NAME
+          tag_name: ${{ env.TAG_NAME }}
           files: target/release/learn
 
   windows-build:
@@ -78,6 +78,6 @@ jobs:
       - name: Upload binary
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: $TAG_NAME
+          tag_name: ${{ env.TAG_NAME }}
           files: target/release/learn.exe
 
