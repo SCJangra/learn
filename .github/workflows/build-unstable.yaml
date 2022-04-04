@@ -19,14 +19,14 @@ jobs:
           override: true
       - name: Build
         run: cargo build --release
-      - name: Delete previous release
-        run: gh release delete unstable -y
+      - name: Create unstable release
+        uses: viperproject/create-nightly-release@v1
         env:
+          # This token is provided by Actions, you do not need to create your own token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Release
-        uses: softprops/action-gh-release@v1
         with:
-          prerelease: true
-          name: Once upon a time
-          tag_name: unstable
-          files: ./target/release/learn#linux-learn
+          tag_name: uuu
+          release_name: Unstable release uuu
+          body: Body for the release
+          keep_num: 0
+          keep_tags: false
