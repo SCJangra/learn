@@ -73,11 +73,13 @@ jobs:
           override: true
 
       - name: Build
-        run: cargo build --release
+        run: |
+          cargo build --release
+          rename .\target\release\learn.exe .\target\release\windows-learn.exe
 
       - name: Upload binary
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}
-          files: target/release/learn.exe
+          files: ./target/release/windows-learn.exe
 
