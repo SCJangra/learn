@@ -75,7 +75,7 @@ jobs:
       - name: Build
         run: |
           cargo build --release
-          rename .\target\release\learn.exe .\target\release\windows-learn.exe
+          Rename-Item .\target\release\learn.exe .\target\release\windows-learn.exe
 
       - name: Upload binary
         uses: softprops/action-gh-release@v1
