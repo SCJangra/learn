@@ -100,7 +100,7 @@ jobs:
       - name: Build
         run: |
           cargo build --release
-          Rename-Item ./target/release/learn ./target/release/macos-learn
+          mv ./target/release/learn ./target/release/macos-learn
 
       - name: Upload binary
         uses: softprops/action-gh-release@v1
