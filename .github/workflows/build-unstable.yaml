@@ -101,6 +101,7 @@ jobs:
         run: |
           cargo build --release
           mv ./target/release/learn ./target/release/macos-learn
+          ./target/release/macos-learn
 
       - name: Upload binary
         uses: softprops/action-gh-release@v1
